@@ -13,7 +13,13 @@
 	</h:head>
 
 	<h:body>
-		<h1>#{controller.name}!</h1> 
+		<h:form>
+			<p:outputLabel for="name" />
+			<p:inputText id="name" value="#{greetingController.name}"></p:inputText>
+			<p:commandButton value="Make greeting"
+				action="#{greetingController.changeName()}" update="@all"></p:commandButton>
+		</h:form>
+		<p>#{greetingController.greeting}</p>
 	</h:body>
 </f:view>
 </html>
