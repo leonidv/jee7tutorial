@@ -27,7 +27,9 @@
 			</p:column>
 			
 			<p:column headerText="Дата рождения">
-				<h:outputText value="#{person.birthdate}" />
+				<h:outputText value="#{person.birthdate}">
+					<f:convertDateTime pattern="dd.MMM.yyyy"/>
+				</h:outputText>
 			</p:column>
 			
 			<p:column headerText="Серия документа">
