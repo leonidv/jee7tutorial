@@ -28,12 +28,12 @@
 			
 			<p:column headerText="Дата рождения">
 				<h:outputText value="#{person.birthdate}">
-					<f:convertDateTime pattern="dd.MMM.yyyy"/>
+					<f:convertDateTime pattern="dd MMM yyyy" locale="ru"/>
 				</h:outputText>
 			</p:column>
 			
 			<p:column headerText="Серия документа">
-				<h:outputText value="#{person.documentSerial}" />
+				<h:outputText value="#{person.documentSerial}" converter="serialConvertor"/>
 			</p:column>
 			
 			<p:column headerText="Номер документа">

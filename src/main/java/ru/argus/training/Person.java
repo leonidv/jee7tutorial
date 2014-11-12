@@ -1,5 +1,6 @@
 package ru.argus.training;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 
 
 @Vetoed
-public class Person {
+public class Person implements Serializable {
     
     public static List<Person> makePersons(int count) {
         List<Person> persons = new ArrayList<Person>(count);
@@ -33,8 +34,8 @@ public class Person {
 
         person.setBirthdate(generateDate());
         
-        person.setDocumentNumber(RandomStringUtils.randomNumeric(4));
-        person.setDoucmentSerial(RandomStringUtils.randomNumeric(8));
+        person.setDocumentNumber(RandomStringUtils.randomNumeric(6));
+        person.setDoucmentSerial(RandomStringUtils.randomNumeric(4));
         
         return person;
     }
