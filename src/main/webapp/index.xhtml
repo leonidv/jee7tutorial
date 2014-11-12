@@ -49,19 +49,20 @@
 					<!--  Рассказать про трабл с копипастой. Здесь было два  -->
 		<p:fieldset toggleable="false" legend="Добавление пользователя"
 			style="margin-top: 50px;">
+			<p:messages autoUpdate="true"/>
 			<h:form id="addPerson">
 				<h:panelGrid columns="2" cellpadding="5">
-					<h:outputLabel for="newPeronsFirstName" value="ФИО" />
-					<p:inputText id="newPeronsFirstName" value="#{personsController.newPersonName}" />
+					<h:outputLabel for="newPeronsFirstName" value="ФИО"  />
+					<p:inputText id="newPeronsFirstName" value="#{personsController.newPersonName}" required="true" requiredMessage="ФИО обязательно к заполнению" />
 						
 					<h:outputLabel value="Дата рождения"/>
-					<p:calendar value="#{personsController.newPersonBirthdate}"/>
+					<p:calendar value="#{personsController.newPersonBirthdate}" required="true" requiredMessage="Дата рождения обязательно к заполнению" />
 
 					<h:outputLabel value="Серия документа"/>
-					<p:inputText value="#{personsController.newPersonDocumentSerial}"/>
+					<p:inputText value="#{personsController.newPersonDocumentSerial}" required="true" requiredMessage="Серия документа обязательно к заполнению" />
 					
 					<h:outputLabel value="Номер документа"/>
-					<p:inputText value="#{personsController.newPersonDocumentNumber}"/>
+					<p:inputText value="#{personsController.newPersonDocumentNumber}" required="true" requiredMessage="Номер документа обязательно к заполнению"/>
 				</h:panelGrid>
 				
 				<p:commandButton value="Добавить" actionListener="#{personsController.addPerson()}" update="@all"/>
