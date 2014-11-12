@@ -21,12 +21,14 @@ public class DocumentSerialConvertor implements Converter {
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		if (value == null) {
-			return null;
+			return "";
 		}
+		
+		int position = Integer.valueOf((String) component.getAttributes().get("whitespacePosition"));
 		
 		StringBuilder serial = new StringBuilder(5);
 		serial.append(value);
-		serial.insert(2, " ");
+		serial.insert(position, " ");
 		return serial.toString();
 	}
 

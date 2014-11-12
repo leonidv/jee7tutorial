@@ -35,7 +35,7 @@ public class Person implements Serializable {
         person.setBirthdate(generateDate());
         
         person.setDocumentNumber(RandomStringUtils.randomNumeric(6));
-        person.setDoucmentSerial(RandomStringUtils.randomNumeric(4));
+        person.setDocumentSerial(RandomStringUtils.randomNumeric(4));
         
         return person;
     }
@@ -115,7 +115,7 @@ public class Person implements Serializable {
         return documentSerial;
     }
 
-    public void setDoucmentSerial(String documentSerial) {
+    public void setDocumentSerial(String documentSerial) {
         this.documentSerial = documentSerial;
     }
 
