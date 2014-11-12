@@ -6,8 +6,14 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,5 +97,32 @@ public class PersonsController implements Serializable {
 		newPersonDocumentNumber = "";
 		newPersonDocumentSerial = "";
 		newPersonBirthdate = null;
+	}
+	
+	public void validateNewPerson(ComponentSystemEvent event) {
+		FacesContext fx = FacesContext.getCurrentInstance();
+		
+		UIComponent components = event.getComponent();
+		
+		String newSerial = "";
+		UIInput serialComponent = (UIInput) components.findComponent("newDocumentSerial");
+		if (serialComponent.getLocalValue() != null) {
+			newSerial = serialComponent.getLocalValue().toString();
+		}
+		
+		String newNumber = "";
+		UIInput numberComponent = (UIInput) components.findComponent("newDocumentNumber");
+		if (numberComponent != null) {
+			newNumber = numberComponent.getLocalValue().toString(); 
+		}
+		
+		char serialFirstDigit = newSerial.charAt(0);
+		char numberFirstDigit = newNumber.charAt(0);
+		
+		if (serialFirstDigit != numberFirstDigit) {
+			FacesMessage msg = new FacesMessage("Серия документа должна начинаться с той же цифры, что и номер документа");
+			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+			fx.renderResponse();
+		}
 	}
 }
