@@ -13,7 +13,31 @@
 	</h:head>
 
 	<h:body>
-		<h1>#{controller.name}!</h1> 
+		<h1>Список пользователей системы</h1>
+		
+		<p:dataTable var="person" value="#{personsController.persons}">
+			<p:column headerText="Фамилия">
+				<h:outputText value="#{person.lastName}" />
+			</p:column>
+			<p:column headerText="Имя">
+				<h:outputText value="#{person.firstName}" />
+			</p:column>
+			<p:column headerText="Отчество">
+				<h:outputText value="#{person.middleName}" />
+			</p:column>
+			
+			<p:column headerText="Дата рождения">
+				<h:outputText value="#{person.birthdate}" />
+			</p:column>
+			
+			<p:column headerText="Серия документа">
+				<h:outputText value="#{person.documentSerial}" />
+			</p:column>
+			
+			<p:column headerText="Номер документа">
+				<h:outputText value="#{person.documentNumber}" />
+			</p:column>
+		</p:dataTable> 
 	</h:body>
 </f:view>
 </html>
