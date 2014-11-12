@@ -46,26 +46,46 @@
 				</h:outputText>
 			</p:column>
 		</p:dataTable>
-					<!--  Рассказать про трабл с копипастой. Здесь было два  -->
+		<!--  Рассказать про трабл с копипастой. Здесь было два  -->
 		<p:fieldset toggleable="false" legend="Добавление пользователя"
 			style="margin-top: 50px;">
-			<p:messages autoUpdate="true"/>
+			<p:messages autoUpdate="true" />
 			<h:form id="addPerson">
 				<h:panelGrid columns="2" cellpadding="5">
-					<h:outputLabel for="newPeronsFirstName" value="ФИО"  />
-					<p:inputText id="newPeronsFirstName" value="#{personsController.newPersonName}" required="true" requiredMessage="ФИО обязательно к заполнению" />
-						
-					<h:outputLabel value="Дата рождения"/>
-					<p:calendar value="#{personsController.newPersonBirthdate}" required="true" requiredMessage="Дата рождения обязательно к заполнению" />
+					<h:outputLabel for="newPeronsFirstName" value="ФИО" />
+					<p:inputText id="newPeronsFirstName"
+						value="#{personsController.newPersonName}" required="true"
+						requiredMessage="ФИО обязательно к заполнению"
+						validatorMessage="Формат ФИО 'Фамили Имя Отчество'"
+						>
+							<f:validateRegex pattern="\p{InCyrillic}+\s+\p{InCyrillic}+\s\p{InCyrillic}"></f:validateRegex>
+					</p:inputText>						
 
-					<h:outputLabel value="Серия документа"/>
-					<p:inputText value="#{personsController.newPersonDocumentSerial}" required="true" requiredMessage="Серия документа обязательно к заполнению" />
-					
-					<h:outputLabel value="Номер документа"/>
-					<p:inputText value="#{personsController.newPersonDocumentNumber}" required="true" requiredMessage="Номер документа обязательно к заполнению"/>
+					<h:outputLabel value="Дата рождения" />
+					<p:calendar value="#{personsController.newPersonBirthdate}"
+						required="true"
+						requiredMessage="Дата рождения обязательно к заполнению" maxdate="01/01/1998" pattern="dd/MM/yyyy" locale="ru"/>
+
+					<h:outputLabel value="Серия документа" />
+					<p:inputText value="#{personsController.newPersonDocumentSerial}"
+						required="true"
+						requiredMessage="Серия документа обязательно к заполнению"
+						validatorMessage="Длина должна быть 4 или 5">
+						<f:validateLength maximum="5" minimum="4" />
+					</p:inputText>
+
+					<h:outputLabel value="Номер документа" />
+					<p:inputText value="#{personsController.newPersonDocumentNumber}"
+						required="true"
+						requiredMessage="Номер документа обязательно к заполнению"
+						validatorMessage="Длина должна быть 6 или 7"
+						>
+						<f:validateLength maximum="7" minimum="6"/>
+					</p:inputText>						
 				</h:panelGrid>
-				
-				<p:commandButton value="Добавить" actionListener="#{personsController.addPerson()}" update="@all"/>
+
+				<p:commandButton value="Добавить"
+					actionListener="#{personsController.addPerson()}" update="@all" />
 			</h:form>
 		</p:fieldset>
 	</h:body>
