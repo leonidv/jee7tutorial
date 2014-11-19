@@ -129,6 +129,7 @@ public class PersonsController implements Serializable {
 			FacesMessage msg = new FacesMessage(
 					"Серия документа должна начинаться с той же цифры, что и номер документа");
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+			fx.addMessage("addPerson", msg);
 			fx.renderResponse();
 		}
 	}
