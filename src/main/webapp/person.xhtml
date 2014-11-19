@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view locale="en">
+	<f:metadata>
+		<f:viewParam name="id" value="#{personController.personId}" required="true" requiredMessage="Идентификатор персоны не передан"/>
+		<f:viewAction action="#{personController.loadPerson()}"></f:viewAction>
+	</f:metadata>
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>CDI - пример работы</title>
+		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+	</h:head>
+	
+	<h:body>
+		<h2>Карточка #{personController.personId}</h2>
+		<p:messages autoUpdate="true"/>
+	</h:body>
+</f:view>
+</html>

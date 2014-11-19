@@ -11,6 +11,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +25,10 @@ public class PersonsController implements Serializable {
 
     private Logger log = LoggerFactory.getLogger(PersonsController.class);
 
-    private List<Person> persons = Person.makePersons(10);
+    @Inject
+    private PersonRepository personRepository;
+    
+    private List<Person> persons;
     
     private String newPersonName = "";
 
@@ -36,7 +40,7 @@ public class PersonsController implements Serializable {
     
     @PostConstruct
     public void sayHello() {
-        log.info("hello");
+        persons = personRepository.load();
     }
 
     public String getName() {

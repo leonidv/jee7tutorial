@@ -15,8 +15,9 @@ import org.apache.commons.lang3.StringUtils;
 
 @Vetoed
 public class Person implements Serializable {
-    
-    public static List<Person> makePersons(int count) {
+	private static final long serialVersionUID = 4753704699017664953L;
+
+	public static List<Person> makePersons(int count) {
         List<Person> persons = new ArrayList<Person>(count);
         for (int i =0; i < count; i++) {
             persons.add(generatePerson());
@@ -56,6 +57,10 @@ public class Person implements Serializable {
         
         return calendar.getTime();
     }
+    
+    private static long counter = 1;
+    
+    private long id = counter++;
     
     private String firstName;
     
@@ -126,7 +131,36 @@ public class Person implements Serializable {
     public void setCards(List<Card> cards) {
         this.cards = cards;
     }
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Person other = (Person) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
  
-    
-    
+	
 }
