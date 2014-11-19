@@ -14,63 +14,75 @@
 
 	<h:body>
 		<h1>Список пользователей системы</h1>
+		<h:form id="table_form">
+			<p:dataTable var="person" value="#{personsController.persons}"
+				selection="#{personsController.selectedPerson}"
+				selectionMode="single" rowKey="#{person.id}">
+				<p:column headerText="Фамилия">
+					<h:outputText value="#{person.lastName}" />
+				</p:column>
+				<p:column headerText="Имя">
+					<h:outputText value="#{person.firstName}" />
+				</p:column>
+				<p:column headerText="Отчество">
+					<h:outputText value="#{person.middleName}" />
+				</p:column>
 
-		<p:dataTable var="person" value="#{personsController.persons}">
-			<p:column headerText="Фамилия">
-				<h:outputText value="#{person.lastName}" />
-			</p:column>
-			<p:column headerText="Имя">
-				<h:outputText value="#{person.firstName}" />
-			</p:column>
-			<p:column headerText="Отчество">
-				<h:outputText value="#{person.middleName}" />
-			</p:column>
+				<p:column headerText="Дата рождения">
+					<h:outputText value="#{person.birthdate}">
+						<f:convertDateTime pattern="dd MMM yyyy" locale="ru" />
+					</h:outputText>
+				</p:column>
 
-			<p:column headerText="Дата рождения">
-				<h:outputText value="#{person.birthdate}">
-					<f:convertDateTime pattern="dd MMM yyyy" locale="ru" />
-				</h:outputText>
-			</p:column>
+				<p:column headerText="Серия документа">
+					<h:outputText value="#{person.documentSerial}">
+						<f:converter converterId="serialConvertor" />
+						<f:attribute name="whitespacePosition" value="2" />
+					</h:outputText>
+				</p:column>
 
-			<p:column headerText="Серия документа">
-				<h:outputText value="#{person.documentSerial}">
-					<f:converter converterId="serialConvertor" />
-					<f:attribute name="whitespacePosition" value="2" />
-				</h:outputText>
-			</p:column>
+				<p:column headerText="Номер документа">
+					<h:outputText value="#{person.documentNumber}">
+						<f:converter converterId="serialConvertor" />
+						<f:attribute name="whitespacePosition" value="3" />
+					</h:outputText>
+				</p:column>
 
-			<p:column headerText="Номер документа">
-				<h:outputText value="#{person.documentNumber}">
-					<f:converter converterId="serialConvertor" />
-					<f:attribute name="whitespacePosition" value="3" />
-				</h:outputText>
-			</p:column>
-		</p:dataTable>
-		
+				<p:ajax event="rowSelect" update=":table_form:personCard" />
+			</p:dataTable>
+
+			<p:link id="personCard" outcome="person"
+				value="Карточка клиента id = #{personsController.selectedPerson.id}" target="_blank">
+				<f:param name="id" value="#{personsController.selectedPerson.id}" />
+			</p:link>
+		</h:form>
 		<!--  Рассказать про трабл с копипастой. Здесь было два  -->
 		<p:fieldset toggleable="false" legend="Добавление пользователя"
 			style="margin-top: 50px;">
-			<p:messages autoUpdate="true" for="grid"/>
+			<p:messages autoUpdate="true" for="grid" />
 			<h:form id="addPerson">
-				<f:event listener="#{personsController.validateNewPerson}" type="postValidate" />
-				<p:message for="grid"/>			
+				<f:event listener="#{personsController.validateNewPerson}"
+					type="postValidate" />
+				<p:message for="grid" />
 				<h:panelGrid columns="2" cellpadding="5" id="grid">
 					<h:outputLabel for="newPeronsFirstName" value="ФИО" />
 					<p:inputText id="newPeronsFirstName"
 						value="#{personsController.newPersonName}" required="true"
 						requiredMessage="ФИО обязательно к заполнению"
-						validatorMessage="Формат ФИО 'Фамили Имя Отчество'"
-						>
-							<f:validateRegex pattern="\p{InCyrillic}+\s+\p{InCyrillic}+\s\p{InCyrillic}"></f:validateRegex>
-					</p:inputText>						
+						validatorMessage="Формат ФИО 'Фамили Имя Отчество'">
+						<f:validateRegex
+							pattern="\p{InCyrillic}+\s+\p{InCyrillic}+\s\p{InCyrillic}"></f:validateRegex>
+					</p:inputText>
 
 					<h:outputLabel value="Дата рождения" />
 					<p:calendar value="#{personsController.newPersonBirthdate}"
 						required="true"
-						requiredMessage="Дата рождения обязательно к заполнению" maxdate="01/01/1998" pattern="dd/MM/yyyy" locale="ru"/>
+						requiredMessage="Дата рождения обязательно к заполнению"
+						maxdate="01/01/1998" pattern="dd/MM/yyyy" locale="ru" />
 
 					<h:outputLabel value="Серия документа" />
-					<p:inputText id="newDocumentSerial" value="#{personsController.newPersonDocumentSerial}"
+					<p:inputText id="newDocumentSerial"
+						value="#{personsController.newPersonDocumentSerial}"
 						required="true"
 						requiredMessage="Серия документа обязательно к заполнению"
 						validatorMessage="Длина должна быть 4 или 5">
@@ -78,12 +90,13 @@
 					</p:inputText>
 
 					<h:outputLabel value="Номер документа" />
-					<p:inputText id="newDocumentNumber" value="#{personsController.newPersonDocumentNumber}"
+					<p:inputText id="newDocumentNumber"
+						value="#{personsController.newPersonDocumentNumber}"
 						required="true"
 						requiredMessage="Номер документа обязательно к заполнению"
 						validatorMessage="Длина должна быть 6 или 7">
-						<f:validateLength maximum="7" minimum="6"/>
-					</p:inputText>						
+						<f:validateLength maximum="7" minimum="6" />
+					</p:inputText>
 				</h:panelGrid>
 
 				<p:commandButton value="Добавить"

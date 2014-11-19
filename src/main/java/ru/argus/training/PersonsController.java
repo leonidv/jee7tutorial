@@ -21,35 +21,37 @@ import org.slf4j.LoggerFactory;
 @SessionScoped
 @Named
 public class PersonsController implements Serializable {
-    private static final long serialVersionUID = 2899450189445795897L;
+	private static final long serialVersionUID = 2899450189445795897L;
 
-    private Logger log = LoggerFactory.getLogger(PersonsController.class);
+	private Logger log = LoggerFactory.getLogger(PersonsController.class);
 
-    @Inject
-    private PersonRepository personRepository;
-    
-    private List<Person> persons;
-    
-    private String newPersonName = "";
+	@Inject
+	private PersonRepository personRepository;
 
-    private String newPersonDocumentSerial = "";
-    
-    private String newPersonDocumentNumber = "";
-    
-    private Date newPersonBirthdate = null;
-    
-    @PostConstruct
-    public void sayHello() {
-        persons = personRepository.load();
-    }
+	private List<Person> persons;
 
-    public String getName() {
-        return "Ivan";
-    }
+	private String newPersonName = "";
 
-    public List<Person> getPersons() {
-        return persons;
-    }
+	private String newPersonDocumentSerial = "";
+
+	private String newPersonDocumentNumber = "";
+
+	private Date newPersonBirthdate = null;
+
+	private Person selectedPerson;
+
+	@PostConstruct
+	public void sayHello() {
+		persons = personRepository.load();
+	}
+
+	public String getName() {
+		return "Ivan";
+	}
+
+	public List<Person> getPersons() {
+		return persons;
+	}
 
 	public String getNewPersonName() {
 		return newPersonName;
@@ -89,44 +91,54 @@ public class PersonsController implements Serializable {
 		person.setLastName(names[0]);
 		person.setFirstName(names[1]);
 		person.setMiddleName(names[2]);
-		
+
 		person.setBirthdate(newPersonBirthdate);
-		
+
 		person.setDocumentNumber(newPersonDocumentNumber);
 		person.setDocumentSerial(newPersonDocumentSerial);
-		
+
 		persons.add(0, person);
-		
+
 		newPersonName = "";
 		newPersonDocumentNumber = "";
 		newPersonDocumentSerial = "";
 		newPersonBirthdate = null;
 	}
-	
+
 	public void validateNewPerson(ComponentSystemEvent event) {
 		FacesContext fx = FacesContext.getCurrentInstance();
-		
+
 		UIComponent components = event.getComponent();
-		
+
 		String newSerial = "";
 		UIInput serialComponent = (UIInput) components.findComponent("newDocumentSerial");
 		if (serialComponent.getLocalValue() != null) {
 			newSerial = serialComponent.getLocalValue().toString();
 		}
-		
+
 		String newNumber = "";
 		UIInput numberComponent = (UIInput) components.findComponent("newDocumentNumber");
 		if (numberComponent != null) {
-			newNumber = numberComponent.getLocalValue().toString(); 
+			newNumber = numberComponent.getLocalValue().toString();
 		}
-		
+
 		char serialFirstDigit = newSerial.charAt(0);
 		char numberFirstDigit = newNumber.charAt(0);
-		
+
 		if (serialFirstDigit != numberFirstDigit) {
-			FacesMessage msg = new FacesMessage("Серия документа должна начинаться с той же цифры, что и номер документа");
+			FacesMessage msg = new FacesMessage(
+					"Серия документа должна начинаться с той же цифры, что и номер документа");
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			fx.renderResponse();
 		}
 	}
+
+	public Person getSelectedPerson() {
+		return selectedPerson;
+	}
+
+	public void setSelectedPerson(Person selectedPerson) {
+		this.selectedPerson = selectedPerson;
+	}
+
 }

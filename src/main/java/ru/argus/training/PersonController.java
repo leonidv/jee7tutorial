@@ -17,10 +17,10 @@ public class PersonController implements Serializable {
 
 
 	private Logger log = LoggerFactory.getLogger(PersonsController.class);
-
 	
 	private long personId;
 
+	
 	public long getPersonId() {
 		return personId;
 	}
