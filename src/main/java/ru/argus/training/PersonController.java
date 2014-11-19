@@ -1,8 +1,10 @@
 package ru.argus.training;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
@@ -20,17 +22,31 @@ public class PersonController implements Serializable {
 	
 	private long personId;
 
+	private Person person;
+	
+	@Inject
+	private PersonRepository personRepository;
+	
+	@PostConstruct
+	public void logPostConstruct() {
+		log.debug("post construct< person id = {}", personId);
+	}
 	
 	public long getPersonId() {
 		return personId;
 	}
 
 	public void setPersonId(long personId) {
+		log.debug("set person id = {}", personId);
 		this.personId = personId;
 	}
 	
 	public void loadPerson() {
-		log.debug("personId = {}", personId);
+		log.debug("load person");
+		person = personRepository.load(personId);
 	}
 	
+	public String getFullName() {
+		return person.getLastName() + " " + person.getFirstName() + " " + person.getMiddleName();
+	}
 }
