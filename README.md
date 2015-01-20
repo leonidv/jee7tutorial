@@ -4,3 +4,5 @@
 * master - содержит минимальную maven конфигурацию c подключенными реализациями CDI (Weld) и JSF (Primefaces)
 * CDI - материалы к рассказу про CDI
 * Primefaces - материалы к рассказу про JSF на примере Primefaces
+
+Лекция читаются внутри компании ООО "НТЦ АРГУС" http://argustelecom.ru
