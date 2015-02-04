@@ -11,6 +11,7 @@ public class GreetingService {
 	
 	@Inject Messages messages;
 	
+	@Logged
 	public String makeGreeting(String name) {
 		return name + " " + messages.getGreeting() + "!";
 	}
