@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view locale="en">
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>CDI - пример работы</title>
+		<h:outputScript library="javax.faces" name="jsf.js" target="head" />		
+	</h:head>
+
+	<h:body>
+		<h1>Карточка клиента</h1>
+		<p>Имя клиента</p>
+		<p>#{profileController.name}</p>
+		
+		<ui:fragment rendered="#{profileController.showHistory()}">
+			<ul>
+				<ui:repeat var="oldName" value="#{profileController.nameHistory}">
+					<li>#{oldName}</li>
+				</ui:repeat>
+			</ul>
+		</ui:fragment>
+	</h:body>
+</f:view>
+</html>

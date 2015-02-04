@@ -3,6 +3,7 @@ package ru.argus.training;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -20,12 +21,19 @@ public class GreetingController implements Serializable {
 	
 	@Inject GreetingService greetingService;
 	
+	@Inject
+	Event<ChangeNameEvent> changeNameEvent;
+	
 	public void setName(String name) {
+		ChangeNameEvent cne = new ChangeNameEvent(this.name, name);
+		changeNameEvent.fire(cne);		
 		this.name = name;
 	}
 	
 	public void changeName() {
+
 		log.info("name is changed = "+name);
+		
 	}
 	
 	public String getName() {
